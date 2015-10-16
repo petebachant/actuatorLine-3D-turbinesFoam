@@ -1,7 +1,7 @@
 /*--------------------------------*- C++ -*----------------------------------*\
 | =========                 |                                                 |
 | \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
-|  \\    /   O peration     | Version:  2.3.x                                 |
+|  \\    /   O peration     | Version:  2.4.x                                 |
 |   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
 |    \\/     M anipulation  |                                                 |
 \*---------------------------------------------------------------------------*/
@@ -21,21 +21,9 @@ internalField   uniform 0; // Was 1e-7
 
 boundaryField
 {
-
-    blades
+    foil
     {
-        type            calculated;
-    }
-
-    shaft
-    {
-        type            nutkWallFunction;
-        value           uniform 0;
-    }
-
-    struts
-    {
-        type            nutkWallFunction;
+        type            nutUSpaldingWallFunction;
         value           uniform 0;
     }
 
@@ -63,23 +51,10 @@ boundaryField
         value           uniform 0;
     }
 
-    AMI1
-    {
-        type  		cyclicAMI;
-        value   	$internalField;
-    }
-
-    AMI2
-    {
-        type  		cyclicAMI;
-        value   	$internalField;
-    }
-
     "proc.*"
     {
         type            processor;
     }
-
 }
 
 

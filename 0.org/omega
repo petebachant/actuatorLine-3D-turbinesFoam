@@ -34,19 +34,7 @@ boundaryField
         value           $internalField;
     }
 
-    blades
-    {
-        type            omegaWallFunction;
-        value           $internalField;
-    }
-
-    shaft
-    {
-        type            omegaWallFunction;
-        value           $internalField;
-    }
-
-    struts
+    foil
     {
         type            omegaWallFunction;
         value           $internalField;
@@ -70,23 +58,10 @@ boundaryField
         value           $internalField;
     }
 
-    AMI1
-    {
-        type  		cyclicAMI;
-        value   	$internalField;
-    }
-
-    AMI2
-    {
-        type  		cyclicAMI;
-        value   	$internalField;
-    }
-
     "proc.*"
     {
         type            processor;
     }
-
 }
 
 

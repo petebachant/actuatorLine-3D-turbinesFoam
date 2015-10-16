@@ -31,17 +31,7 @@ boundaryField
         value           $internalField;
     }
 
-    blades
-    {
-        type            zeroGradient;
-    }
-
-    shaft
-    {
-        type            zeroGradient;
-    }
-
-    struts
+    foil
     {
         type            zeroGradient;
     }
@@ -61,23 +51,10 @@ boundaryField
         type            zeroGradient;
     }
 
-    AMI1
-    {
-        type  		cyclicAMI;
-        value   	$internalField;
-    }
-
-    AMI2
-    {
-        type  		cyclicAMI;
-        value   	$internalField;
-    }
-
     "proc.*"
     {
         type            processor;
     }
-
 }
 
 // ************************************************************************* //

@@ -34,21 +34,9 @@ boundaryField
         value           uniform (0 0 0);
     }
 
-    blades
+    foil
     {
-        type            movingWallVelocity;
-        value           uniform (0 0 0);
-    }
-
-    shaft
-    {
-        type            movingWallVelocity;
-        value           uniform (0 0 0);
-    }
-
-    struts
-    {
-        type            movingWallVelocity;
+        type            fixedValue;
         value           uniform (0 0 0);
     }
 
@@ -69,23 +57,10 @@ boundaryField
         value           uniform (1 0 0);
     }
 
-    AMI1
-    {
-        type  		cyclicAMI;
-        value   	$internalField;
-    }
-
-    AMI2
-    {
-        type  		cyclicAMI;
-        value   	$internalField;
-    }
-
     "proc.*"
     {
         type            processor;
     }
-
 }
 
 
