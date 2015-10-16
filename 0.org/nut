@@ -23,7 +23,7 @@ boundaryField
 {
     foil
     {
-        type            nutUSpaldingWallFunction;
+        type            nutkWallFunction;
         value           uniform 0;
     }
 
