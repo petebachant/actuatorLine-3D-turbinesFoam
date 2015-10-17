@@ -13,6 +13,7 @@ Inflow detection in turbinesFoam:
 import numpy as np
 c = 0.14
 
+
 def read_alpha_deg():
     """Read angle of attack from `log.surfaceTransformPoints`."""
     with open("log.surfaceTransformPoints") as f:
