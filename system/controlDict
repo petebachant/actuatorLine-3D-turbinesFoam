@@ -49,6 +49,8 @@ adjustTimeStep  true;
 
 maxCo           2.0;
 
+libs            ("libturbinesFoam.so");
+
 functions
 {
     forceCoeffs
@@ -57,6 +59,7 @@ functions
         functionObjectLibs  ("libforces.so");
         outputControl       timeStep;
         outputInterval      1;
+        enabled             false;
 
         patches             (foil);
         pName               p;

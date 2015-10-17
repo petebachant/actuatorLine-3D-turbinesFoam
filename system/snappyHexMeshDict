@@ -41,11 +41,11 @@ geometry
         max (0.5 0.2 0.7);
     }
 
-    foil.stl
-    {
-        type        triSurfaceMesh;
-        name        foil;
-    }
+    // foil.stl
+    // {
+    //     type        triSurfaceMesh;
+    //     name        foil;
+    // }
 };
 
 // Settings for the castellatedMesh generation.
@@ -99,10 +99,10 @@ castellatedMeshControls
 
     features
     (
-        {
-            file    "foil.eMesh";
-            levels  ((0.0 4));
-        }
+        // {
+        //     file    "foil.eMesh";
+        //     levels  ((0.0 4));
+        // }
     );
 
 
@@ -117,10 +117,10 @@ castellatedMeshControls
 
     refinementSurfaces
     {
-        foil
-        {
-            level   (4 4);
-        }
+        // foil
+        // {
+        //     level   (4 4);
+        // }
     }
 
     // Feature angle:
