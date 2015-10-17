@@ -32,15 +32,20 @@ def plot_alpha(ax=None):
     ax.set_ylabel(r"$\alpha$ (degrees)")
 
 
-def plot_inflow(ax=None):
+def plot_inflow(ax=None, component=None):
     """Plot inflow velocity magnitude versus vertical coordinate."""
     df = pr.load_sampled_velocity(name="inflow")
-    df["rel_vel_mag"] = np.sqrt(df.U_0**2 + df.U_1**2)
+    if component is None:
+        vel = np.sqrt(df.U_0**2 + df.U_1**2)
+        ylabel = r"$|U_\mathrm{in}|$"
+    else:
+        vel = df["U_" + str(component)]
+        ylabel = r"$U_{}$".format(component)
     if ax is None:
         fig, ax = plt.subplots()
-    ax.plot(df.z, df.rel_vel_mag)
+    ax.plot(df.z, vel)
     ax.set_xlabel("$z/H$")
-    ax.set_ylabel(r"$|U_\mathrm{in}|$")
+    ax.set_ylabel(ylabel)
 
 
 def plot_trailing_vorticity(ax=None):
@@ -51,3 +56,13 @@ def plot_trailing_vorticity(ax=None):
     ax.plot(df.z, df.vorticity_2)
     ax.set_xlabel("$z/H$")
     ax.set_ylabel(r"$\omega_z$")
+
+
+def plot_trailing_velocity(ax=None, component=0):
+    """Plot trailing velocity versus vertical coordinate."""
+    df = pr.load_sampled_vorticity(name="trailing")
+    if ax is None:
+        fig, ax = plt.subplots()
+    ax.plot(df.z, df["U_" + str(component)])
+    ax.set_xlabel("$z/H$")
+    ax.set_ylabel(r"$U_{}$".format(component))
