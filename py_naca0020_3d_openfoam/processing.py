@@ -24,3 +24,11 @@ def load_force_coeffs(steady=False):
     df["cd"] = data[:, 2]
     df["cm"] = data[:, 1]
     return df
+
+
+def load_sampled_set(name="spanwise", quantity="p"):
+    """Load sampled set sampled from latest time."""
+    timedir = max(os.listdir("postProcessing/sets"))
+    fpath = "postProcessing/sets/{}/{}_{}.csv".format(timedir, name, quantity)
+    df = pd.read_csv(fpath)
+    return df
