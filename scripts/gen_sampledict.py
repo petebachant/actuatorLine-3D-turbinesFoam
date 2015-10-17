@@ -50,9 +50,7 @@ def calc_xy():
 
 if __name__ == "__main__":
     xy = calc_xy()
-
     with open("system/sampleDict.template") as f:
         txt = f.read()
-
     with open("system/sampleDict", "w") as f:
         f.write(txt.format(**xy))
