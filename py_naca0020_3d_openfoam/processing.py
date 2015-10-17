@@ -32,3 +32,13 @@ def load_sampled_set(name="spanwise", quantity="p"):
     fpath = "postProcessing/sets/{}/{}_{}.csv".format(timedir, name, quantity)
     df = pd.read_csv(fpath)
     return df
+
+
+def read_alpha_deg():
+    """Read angle of attack from `log.surfaceTransformPoints`."""
+    with open("log.surfaceTransformPoints") as f:
+        for line in f:
+            line = line.strip()
+            line = line.split()
+            if "yaw" in line:
+                return float(line[-1])
