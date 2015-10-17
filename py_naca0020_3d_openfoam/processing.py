@@ -34,6 +34,21 @@ def load_sampled_set(name="spanwise", quantity="p"):
     return df
 
 
+def load_sampled_pressure(name="spanwise"):
+    """Load sampled pressure from latest time."""
+    return load_sampled_set(name=name, quantity="p")
+
+
+def load_sampled_velocity(name="inflow"):
+    """Load sampled velocity."""
+    return load_sampled_set(name=name, quantity="U_vorticity")
+
+
+def load_sampled_vorticity(name="trailing"):
+    """Load sampled vorticity."""
+    return load_sampled_velocity(name=name)
+
+
 def read_alpha_deg():
     """Read angle of attack from `log.surfaceTransformPoints`."""
     with open("log.surfaceTransformPoints") as f:

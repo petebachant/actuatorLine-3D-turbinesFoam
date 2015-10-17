@@ -22,7 +22,7 @@ def plot_spanwise_pressure(ax=None):
 
 def plot_alpha(ax=None):
     """Plot angle of attack versus vertical coordinate."""
-    df = pr.load_sampled_set("inflow", "U")
+    df = pr.load_sampled_velocity(name="inflow")
     pitch = pr.read_alpha_deg()
     df["alpha_deg"] = pitch - np.rad2deg(np.tan(df.U_1/df.U_0))
     if ax is None:
@@ -34,10 +34,20 @@ def plot_alpha(ax=None):
 
 def plot_inflow(ax=None):
     """Plot inflow velocity magnitude versus vertical coordinate."""
-    df = pr.load_sampled_set("inflow", "U")
+    df = pr.load_sampled_velocity(name="inflow")
     df["rel_vel_mag"] = np.sqrt(df.U_0**2 + df.U_1**2)
     if ax is None:
         fig, ax = plt.subplots()
     ax.plot(df.z, df.rel_vel_mag)
     ax.set_xlabel("$z/H$")
     ax.set_ylabel(r"$|U_\mathrm{in}|$")
+
+
+def plot_trailing_vorticity(ax=None):
+    """Plot trailing vorticity versus vertical coordinate."""
+    df = pr.load_sampled_vorticity(name="trailing")
+    if ax is None:
+        fig, ax = plt.subplots()
+    ax.plot(df.z, df.vorticity_2)
+    ax.set_xlabel("$z/H$")
+    ax.set_ylabel(r"$\omega_z$")

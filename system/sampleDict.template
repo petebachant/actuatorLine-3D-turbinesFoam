@@ -37,12 +37,22 @@ sets
         end         ({inflow_x} {inflow_y} 0.5);
         nPoints     201;
     }}
+
+    trailing
+    {{
+        type        uniform;
+        axis        z;
+        start       ({trailing_x} {trailing_y} -0.5);
+        end         ({trailing_x} {trailing_y} 0.5);
+        nPoints     201;
+    }}
 );
 
 fields
 (
     U
     p
+    vorticity
 );
 
 // *********************************************************************** //
