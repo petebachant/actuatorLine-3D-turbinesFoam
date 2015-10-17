@@ -7,3 +7,6 @@ cd ${0%/*} || exit 1    # run from this directory
 scripts/Allrun.pre $1
 
 runApplication pimpleFoam
+runApplication vorticity
+python scripts/gensampledict.py
+runApplication sample -latestTime
