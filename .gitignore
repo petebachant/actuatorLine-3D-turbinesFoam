@@ -37,3 +37,5 @@ processed/mean_w.csv
 processed/xvorticity.csv
 dynamicCode
 constant/triSurface/foil.stl
+notebook.ipynb
+.ipynb_checkpoints

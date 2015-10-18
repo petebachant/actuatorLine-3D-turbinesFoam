@@ -44,7 +44,7 @@ def calc_xy():
     inflow_x, inflow_y = np.array((0, 0)) - 0.15*c*freestream_dir \
                        + 0.1*c*chord_dir - 0.75*c*planform_dir
     spanwise_x, spanwise_y = planform_dir*0.2/2*c*1.001
-    trailing_x, trailing_y = freestream_dir*c*1.25
+    trailing_x, trailing_y = freestream_dir*c*1
     return {"inflow_x": inflow_x, "inflow_y": inflow_y,
             "spanwise_x": spanwise_x, "spanwise_y": spanwise_y,
             "trailing_x": trailing_x, "trailing_y": trailing_y}
