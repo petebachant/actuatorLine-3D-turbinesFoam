@@ -60,7 +60,7 @@ def plot_trailing_vorticity(ax=None):
 
 def plot_trailing_velocity(ax=None, component=0):
     """Plot trailing velocity versus vertical coordinate."""
-    df = pr.load_sampled_vorticity(name="trailing")
+    df = pr.load_sampled_velocity(name="trailing")
     if ax is None:
         fig, ax = plt.subplots()
     ax.plot(df.z, df["U_" + str(component)])
