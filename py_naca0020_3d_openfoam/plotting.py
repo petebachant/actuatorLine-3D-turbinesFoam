@@ -84,17 +84,19 @@ def plot_spanwise_al():
     z_H = np.zeros(len(elements))
     urel = np.zeros(len(elements))
     alpha_deg = np.zeros(len(elements))
+    lift = np.zeros(len(elements))
     for e in elements:
         i = int(e.replace("foilElement", "").replace(".csv", ""))
         df = pd.read_csv(os.path.join(elements_dir, e))
         z_H[i] = df.z.iloc[-1]/H
         urel[i] = df.rel_vel_mag.iloc[-1]/U_infty
         alpha_deg[i] = df.alpha_deg.iloc[-1]
+        lift[i] = df.cl.iloc[-1]*urel[i]**2/0.5
     fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(7.5, 3.25))
     ax[0].plot(z_H, alpha_deg)
     ax[0].set_ylabel(r"$\alpha$ (deg)")
-    ax[1].plot(z_H, urel)
-    ax[1].set_ylabel(r"$ | U_{\mathrm{rel}} | / U_\infty $")
+    ax[1].plot(z_H, np.abs(lift))
+    ax[1].set_ylabel(r"$ |F_l| /(\frac{1}{2} \rho U_\infty^2) $")
     for a in ax:
         a.set_xlabel("$z/H$")
         a.grid(True)
