@@ -13,6 +13,11 @@ H = 1.0
 U_infty = 1.0
 
 
+labels = {"alpha_deg": r"$\alpha$ (deg.)",
+          "rel_vel_mag": r"$|U_\mathrm{rel}|$",
+          "lift": r"$ |F_l| /(\frac{1}{2} \rho U_\infty^2) $"}
+
+
 def plot_spanwise_pressure(ax=None):
     """Plot spanwise pressure, normalized and inverted."""
     df = pr.load_sampled_set("spanwise", "p")
@@ -74,13 +79,10 @@ def plot_trailing_velocity(ax=None, component=0):
     ax.set_ylabel(r"$U_{}$".format(component))
 
 
-def plot_spanwise_al():
-    """
-    Plot spanwise distribution of angle of attack and relative velocity.
-    """
+def load_spanwise_al_data():
+    """Load spanwise data for the actuator line."""
     elements_dir = "postProcessing/actuatorLineElements/0"
     elements = os.listdir(elements_dir)
-    dfs = {}
     z_H = np.zeros(len(elements))
     urel = np.zeros(len(elements))
     alpha_deg = np.zeros(len(elements))
@@ -92,12 +94,27 @@ def plot_spanwise_al():
         urel[i] = df.rel_vel_mag.iloc[-1]/U_infty
         alpha_deg[i] = df.alpha_deg.iloc[-1]
         lift[i] = df.cl.iloc[-1]*urel[i]**2/0.5
-    fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(7.5, 3.25))
-    ax[0].plot(z_H, alpha_deg)
-    ax[0].set_ylabel(r"$\alpha$ (deg)")
-    ax[1].plot(z_H, np.abs(lift))
-    ax[1].set_ylabel(r"$ |F_l| /(\frac{1}{2} \rho U_\infty^2) $")
-    for a in ax:
+    df = pd.DataFrame()
+    df["z_H"] = z_H
+    df["alpha_deg"] = alpha_deg
+    df["rel_vel_mag"] = urel
+    df["lift"] = lift
+    return df
+
+
+def plot_spanwise_al(quantities=["alpha_deg", "rel_vel_mag"]):
+    """Plot spanwise distributions from actuator line."""
+    if not isinstance(quantities, list):
+        quantities = [quantities]
+    df = load_spanwise_al_data()
+    if len(quantities) > 1:
+        fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(7.5, 3.25))
+    else:
+        fig, ax = plt.subplots()
+        ax = [ax]
+    for a, q in zip(ax, quantities):
+        a.plot(df.z_H, df[q])
+        a.set_ylabel(labels[q])
         a.set_xlabel("$z/H$")
         a.grid(True)
     fig.tight_layout()
