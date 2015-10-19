@@ -62,9 +62,9 @@ def plot_inflow(ax=None, component=None, mag=False):
     ax.set_ylabel(ylabel)
 
 
-def plot_trailing_vorticity(ax=None, component=2):
-    """Plot trailing vorticity versus vertical coordinate."""
-    df = pr.load_sampled_vorticity(name="trailing")
+def plot_vorticity(ax=None, name="trailing", component=2):
+    """Plot vorticity versus vertical coordinate."""
+    df = pr.load_sampled_vorticity(name=name)
     if ax is None:
         fig, ax = plt.subplots()
     ax.plot(df.z, df["vorticity_" + str(component)])
@@ -72,14 +72,24 @@ def plot_trailing_vorticity(ax=None, component=2):
     ax.set_ylabel(r"$\omega_{}$".format(component))
 
 
-def plot_trailing_velocity(ax=None, component=0):
+def plot_trailing_vorticity(ax=None, component=2):
+    """Plot trailing vorticity versus vertical coordinate."""
+    plot_vorticity(ax=ax, name="trailing", component=component)
+
+
+def plot_trailing_velocity(ax=None, component=0, mag=False):
     """Plot trailing velocity versus vertical coordinate."""
     df = pr.load_sampled_velocity(name="trailing")
     if ax is None:
         fig, ax = plt.subplots()
-    ax.plot(df.z, df["U_" + str(component)])
+    vel = df["U_" + str(component)]
+    ylabel = r"$U_{}$".format(component)
+    if mag:
+        vel = np.abs(vel)
+        ylabel = r"$|U_{}|$".format(component)
+    ax.plot(df.z, vel)
     ax.set_xlabel("$z/H$")
-    ax.set_ylabel(r"$U_{}$".format(component))
+    ax.set_ylabel(ylabel)
 
 
 def load_spanwise_al_data():
