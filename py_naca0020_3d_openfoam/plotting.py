@@ -43,7 +43,7 @@ def plot_alpha(ax=None):
     ax.set_ylabel(r"$\alpha$ (degrees)")
 
 
-def plot_inflow(ax=None, component=None):
+def plot_inflow(ax=None, component=None, mag=False):
     """Plot inflow velocity magnitude versus vertical coordinate."""
     df = pr.load_sampled_velocity(name="inflow")
     if component is None:
@@ -54,19 +54,22 @@ def plot_inflow(ax=None, component=None):
         ylabel = r"$U_{}$".format(component)
     if ax is None:
         fig, ax = plt.subplots()
+    if mag:
+        vel = np.abs(vel)
+        ylabel = r"$|U_{}|$".format(component)
     ax.plot(df.z, vel)
     ax.set_xlabel("$z/H$")
     ax.set_ylabel(ylabel)
 
 
-def plot_trailing_vorticity(ax=None):
+def plot_trailing_vorticity(ax=None, component=2):
     """Plot trailing vorticity versus vertical coordinate."""
     df = pr.load_sampled_vorticity(name="trailing")
     if ax is None:
         fig, ax = plt.subplots()
-    ax.plot(df.z, df.vorticity_2)
+    ax.plot(df.z, df["vorticity_" + str(component)])
     ax.set_xlabel("$z/H$")
-    ax.set_ylabel(r"$\omega_z$")
+    ax.set_ylabel(r"$\omega_{}$".format(component))
 
 
 def plot_trailing_velocity(ax=None, component=0):
@@ -93,12 +96,12 @@ def load_spanwise_al_data():
         z_H[i] = df.z.iloc[-1]/H
         urel[i] = df.rel_vel_mag.iloc[-1]/U_infty
         alpha_deg[i] = df.alpha_deg.iloc[-1]
-        lift[i] = df.cl.iloc[-1]*urel[i]**2/0.5
+        lift[i] = df.cl.iloc[-1]*urel[i]**2*0.5
     df = pd.DataFrame()
     df["z_H"] = z_H
     df["alpha_deg"] = alpha_deg
     df["rel_vel_mag"] = urel
-    df["lift"] = lift
+    df["lift"] = np.abs(lift)
     return df
 
 
