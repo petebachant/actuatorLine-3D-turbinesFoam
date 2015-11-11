@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import argparse
-import py_naca0020_3d_openfoam.processing as proc
+import pyal3dtf.processing as proc
 
 labels = {"cl": r"$C_l$", "cd": r"$C_d$", "cl/cd": r"$C_l/C_d$", "k": "$k$",
           "omega": r"$\omega$", "epsilon": r"$\epsilon$",
