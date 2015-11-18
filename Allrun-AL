@@ -8,7 +8,7 @@ cd ${0%/*} || exit 1    # run from this directory
 cp system/snappyHexMeshDict-AL system/snappyHexMeshDict
 
 scripts/Allrun.pre
-runApplication pimpleFoam
+runApplication $(getApplication)
 runApplication vorticity
 python scripts/gensampledict.py
 runApplication sample -latestTime

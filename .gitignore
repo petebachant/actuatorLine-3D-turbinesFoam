@@ -40,3 +40,4 @@ constant/triSurface/foil.stl
 notebook.ipynb
 .ipynb_checkpoints
 system/snappyHexMeshDict
+system/fvOptions-disabled

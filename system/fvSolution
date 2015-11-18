@@ -65,9 +65,9 @@ solvers
 PIMPLE
 {
     correctPhi          no;
-    nOuterCorrectors    20; // Was 2, set higher for more PIMPLE loops
-    nCorrectors         3; // Was 1
-    nNonOrthogonalCorrectors 1; // Was 0
+    nOuterCorrectors    20;
+    nCorrectors         1;
+    nNonOrthogonalCorrectors 1;
     pRefCell        1001;
     pRefValue       0;
 
