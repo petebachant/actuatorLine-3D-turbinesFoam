@@ -61,16 +61,9 @@ if __name__ == "__main__":
     if args.timeseries:
         plot_time_series(args.quantity)
     elif "spanwise-pressure" in args.quantity:
-        pl.plot_spanwise_pressure(simtype=args.blade_type)
+        pl.plot_spanwise_pressure(simtype=args.blade_type, save=args.save)
     elif "trailing-vorticity" in args.quantity:
-        pl.plot_trailing_vorticity(simtype=args.blade_type)
-
-    if args.save:
-        if not os.path.isdir("figures"):
-            os.mkdir("figures")
-        plt.savefig("figures/{}-{}.pdf".format(args.blade_type, args.quantity))
-        plt.savefig("figures/{}-{}.png".format(args.blade_type, args.quantity),
-                    dpi=300)
+        pl.plot_trailing_vorticity(simtype=args.blade_type, save=args.save)
 
     if not args.noshow:
         plt.show()
