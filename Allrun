@@ -4,8 +4,7 @@ cd ${0%/*} || exit 1    # run from this directory
 # Source tutorial run functions
 . $WM_PROJECT_DIR/bin/tools/RunFunctions
 
-scripts/Allrun.pre $1
-
+scripts/Allrun.pre
 runApplication pimpleFoam
 runApplication vorticity
 python scripts/gensampledict.py

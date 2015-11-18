@@ -5,13 +5,9 @@
 
 # Meshing
 runApplication blockMesh
-runApplication surfaceTransformPoints -yawPitchRoll "($1 0 0)" constant/triSurface/NACA0020.stl constant/triSurface/foil.stl
-runApplication surfaceFeatureExtract
 runApplication snappyHexMesh -overwrite
 runApplication renumberMesh -overwrite
+runApplication topoSet
 
 # Apply the initial fields
 cp -rf 0.org 0
-
-runApplication checkMesh
-runApplication yPlusRAS
