@@ -12,3 +12,7 @@ runApplication $(getApplication)
 runApplication vorticity
 python scripts/gensampledict.py
 runApplication sample -latestTime
+
+# Move post processed data
+mkdir -p processed
+cp -rfT postProcessing processed/BR

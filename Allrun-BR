@@ -18,3 +18,7 @@ runApplication sample -latestTime
 
 # Move fvOptions back
 mv system/fvOptions-disabled system/fvOptions
+
+# Move post processed data
+mkdir -p processed
+cp -rfT postProcessing processed/BR
