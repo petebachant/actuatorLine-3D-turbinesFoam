@@ -8,7 +8,9 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import argparse
-import pyal3dtf.processing as proc
+import pyal3dtf.processing as pr
+import pyal3dtf.plotting as pl
+import os
 
 labels = {"cl": r"$C_l$", "cd": r"$C_d$", "cl/cd": r"$C_l/C_d$", "k": "$k$",
           "omega": r"$\omega$", "epsilon": r"$\epsilon$",
@@ -19,7 +21,7 @@ def plot_time_series(quantity="cl"):
     """
     Plot specified quantity over time. Can be used to visualize convergence.
     """
-    df = proc.load_force_coeffs()
+    df = pr.load_force_coeffs()
     if quantity == "cl/cd":
         q = df.cl/df.cd
     else:
@@ -32,36 +34,23 @@ def plot_time_series(quantity="cl"):
     plt.tight_layout()
 
 
-def plot_foil_perf(quantity="cl/cd", foil="0012", Re=2e5, x="alpha_deg"):
-    df = pd.read_csv("processed/NACA{}_{:.1e}.csv".format(foil, Re))
-    plt.figure()
-    if quantity == "cl/cd":
-        q = df.cl/df.cd
-    else:
-        q = df[quantity]
-    plt.plot(df[x], q, "-o")
-    plt.xlabel(labels[x])
-    plt.ylabel(labels[quantity])
-    plt.grid(True)
-    plt.tight_layout()
-
-
 if __name__ == "__main__":
     try:
-        import seaborn
-        seaborn.set(style="white", context="notebook", font_scale=1.5)
+        import pxl
+        pxl.styleplot.set_sns()
+        plt.rcParams["axes.grid"] = True
     except ImportError:
-        print("Could not import seaborn for plot styling. Try")
-        print("\n    conda install seaborn\n\nor")
-        print("\n    pip install seaborn\n")
+        print("Could not import PXL for plot styling. Try")
+        print("\n    conda install seaborn\n\nand")
+        print("\n    pip install pxl\n")
 
     parser = argparse.ArgumentParser(description="Plotting results")
-    parser.add_argument("quantity", nargs="?", default="cl/cd",
+    parser.add_argument("quantity", nargs="*", default="spanwise-pressure",
                         help="Which quantity to plot",
-                        choices=["cl", "cd", "cl/cd", "k", "omega", "epsilon"])
-    parser.add_argument("-x", help="Quantity on x-axis", default="alpha_deg")
-    parser.add_argument("--foil", "-f", help="Foil", default="0012")
-    parser.add_argument("--Reynolds", "-R", help="Reynolds number", default=2e5)
+                        choices=["cl", "cd", "cl/cd", "spanwise-pressure",
+                                 "trailing-vorticity"])
+    parser.add_argument("--blade-type", "-b", default="BR", choices=["BR",
+                        "AL"], help="Blade-resolved or actuator line")
     parser.add_argument("--save", "-s", action="store_true", help="Save plots")
     parser.add_argument("--noshow", action="store_true", default=False,
                         help="Do not show")
@@ -71,14 +60,17 @@ if __name__ == "__main__":
 
     if args.timeseries:
         plot_time_series(args.quantity)
-    else:
-        plot_foil_perf(args.quantity, args.foil, float(args.Reynolds),
-                       x=args.x)
+    elif "spanwise-pressure" in args.quantity:
+        pl.plot_spanwise_pressure(simtype=args.blade_type)
+    elif "trailing-vorticity" in args.quantity:
+        pl.plot_trailing_vorticity(simtype=args.blade_type)
 
     if args.save:
         if not os.path.isdir("figures"):
             os.mkdir("figures")
-        plt.savefig("figures/{}.pdf".format(args.quantity))
+        plt.savefig("figures/{}-{}.pdf".format(args.blade_type, args.quantity))
+        plt.savefig("figures/{}-{}.png".format(args.blade_type, args.quantity),
+                    dpi=300)
 
     if not args.noshow:
         plt.show()

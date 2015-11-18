@@ -7,9 +7,9 @@ import matplotlib.pyplot as plt
 from . import processing as pr
 
 
-def plot_spanwise_pressure(ax=None):
+def plot_spanwise_pressure(ax=None, simtype="BR"):
     """Plot spanwise pressure, normalized and inverted."""
-    df = pr.load_sampled_set("spanwise", "p")
+    df = pr.load_sampled_set("spanwise", "p", simtype=simtype)
     df["p_norm"] = -df.p
     df.p_norm -= df.p_norm.min()
     df.p_norm /= df.p_norm.max()
@@ -48,9 +48,9 @@ def plot_inflow(ax=None, component=None):
     ax.set_ylabel(ylabel)
 
 
-def plot_trailing_vorticity(ax=None):
+def plot_trailing_vorticity(ax=None, simtype="BR"):
     """Plot trailing vorticity versus vertical coordinate."""
-    df = pr.load_sampled_vorticity(name="trailing")
+    df = pr.load_sampled_vorticity(name="trailing", simtype=simtype)
     if ax is None:
         fig, ax = plt.subplots()
     ax.plot(df.z, df.vorticity_2)
@@ -58,9 +58,9 @@ def plot_trailing_vorticity(ax=None):
     ax.set_ylabel(r"$\omega_z$")
 
 
-def plot_trailing_velocity(ax=None, component=0):
+def plot_trailing_velocity(ax=None, component=0, simtype="BR"):
     """Plot trailing velocity versus vertical coordinate."""
-    df = pr.load_sampled_velocity(name="trailing")
+    df = pr.load_sampled_velocity(name="trailing", simtype=simtype)
     if ax is None:
         fig, ax = plt.subplots()
     ax.plot(df.z, df["U_" + str(component)])

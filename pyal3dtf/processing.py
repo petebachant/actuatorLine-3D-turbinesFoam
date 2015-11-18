@@ -26,10 +26,11 @@ def load_force_coeffs(steady=False):
     return df
 
 
-def load_sampled_set(name="spanwise", quantity="p"):
+def load_sampled_set(name="spanwise", quantity="p", simtype="BR"):
     """Load sampled set sampled from latest time."""
-    timedir = max(os.listdir("postProcessing/sets"))
-    fpath = "postProcessing/sets/{}/{}_{}.csv".format(timedir, name, quantity)
+    timedir = max(os.listdir("processed/{}/sets".format(simtype)))
+    fpath = "processed/{}/sets/{}/{}_{}.csv".format(simtype, timedir, name,
+                                                    quantity)
     df = pd.read_csv(fpath)
     return df
 
@@ -39,14 +40,15 @@ def load_sampled_pressure(name="spanwise"):
     return load_sampled_set(name=name, quantity="p")
 
 
-def load_sampled_velocity(name="inflow"):
+def load_sampled_velocity(name="inflow", simtype="BR"):
     """Load sampled velocity."""
-    return load_sampled_set(name=name, quantity="U_vorticity")
+    return load_sampled_set(name=name, quantity="U_vorticity",
+                            simtype=simtype)
 
 
-def load_sampled_vorticity(name="trailing"):
+def load_sampled_vorticity(name="trailing", simtype="BR"):
     """Load sampled vorticity."""
-    return load_sampled_velocity(name=name)
+    return load_sampled_velocity(name=name, simtype=simtype)
 
 
 def read_alpha_deg():

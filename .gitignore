@@ -41,3 +41,4 @@ notebook.ipynb
 .ipynb_checkpoints
 system/snappyHexMeshDict
 system/fvOptions-disabled
+figures
