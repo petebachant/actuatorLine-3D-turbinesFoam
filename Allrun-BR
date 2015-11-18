@@ -4,8 +4,17 @@ cd ${0%/*} || exit 1    # run from this directory
 # Source tutorial run functions
 . $WM_PROJECT_DIR/bin/tools/RunFunctions
 
+# Copy correct snappyHexMeshDict
+cp system/snappyHexMeshDict-AL system/snappyHexMeshDict
+
+# Temporarily move fvOptions to disable
+mv system/fvOptions system/fvOptions-disabled
+
 scripts/Allrun.pre
 runApplication pimpleFoam
 runApplication vorticity
 python scripts/gensampledict.py
 runApplication sample -latestTime
+
+# Move fvOptions back
+mv system/fvOptions-disabled system/fvOptions
