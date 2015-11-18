@@ -5,7 +5,7 @@ cd ${0%/*} || exit 1    # run from this directory
 . $WM_PROJECT_DIR/bin/tools/RunFunctions
 
 # Copy correct snappyHexMeshDict
-cp system/snappyHexMeshDict-AL system/snappyHexMeshDict
+cp system/snappyHexMeshDict-BR system/snappyHexMeshDict
 
 # Temporarily move fvOptions to disable
 mv system/fvOptions system/fvOptions-disabled
